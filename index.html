@@ -1,1 +1,48 @@
-<h1>hello world!</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Legal Tender Overview</title>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/chart-3.7.1.min.js"></script>
+    <script type="text/javascript" src="js/chartjs-chart-geo-3.7.1.min.js"></script>
+  </head>
+  <script type="text/javascript">
+    console.log("hello world!");
+    window.onload = function(){
+        console.log("site loaded!");
+        fetch('https://unpkg.com/world-atlas/countries-50m.json').then((r) => r.json()).then((data) => {
+      const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
+        const chart = new Chart(document.getElementById("canvas").getContext("2d"), {
+            type: 'choropleth',
+            data: {
+            labels: countries.map((d) => d.properties.name),
+            datasets: [{
+                label: 'Countries',
+                data: countries.map((d) => ({feature: d, value: Math.random()})),
+            }]
+            },
+            options: {
+            showOutline: true,
+            showGraticule: true,
+            plugins: {
+                legend: {
+                display: false
+                },
+            },
+            scales: {
+                xy: {
+                projection: 'equalEarth'
+                }
+            }
+            }
+            });
+            });
+        };
+  </script>
+  <body>
+    <h1>Bitcoin Legal Tender Overview</h1>
+    <canvas id="canvas"></canvas>
+  </body>
+</html>
