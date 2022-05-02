@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin Legal Tender Overview</title>
+    <title>Bitcoin Legal Tender</title>
     <link rel="shortcut icon" type="image/x-icon" href="resources/favicon.ico">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
@@ -13,8 +13,8 @@
   </head>
   <script type="text/javascript">
     window.onload = function(){
-        fetch('https://unpkg.com/world-atlas/countries-50m.json').then((r) => r.json()).then((data) => {
-      const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
+        fetch('https://raw.githubusercontent.com/schui95/legaltender21/main/resources/countries.json').then((r) => r.json()).then((data) => {
+        const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
         const chart = new Chart(document.getElementById("canvas").getContext("2d"), {
             type: 'choropleth',
             data: {
