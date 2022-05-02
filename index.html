@@ -24,7 +24,7 @@
             datasets: [{
                 label: "Countries",
                 data: countries.map((c) => ({feature: c, value: (c.properties.name in adoptions)? adoptions[c.properties.name].blockheight:-1})),
-                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? "#f2a900": "#696969")
+                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? "#f2a900": "#282828")
             }]
             },
             options: {
@@ -58,7 +58,7 @@
     <center>
       <a style="text-decoration: none;" href="https://unchained.com/blog/dollar-crisis-to-bitcoin/">
         <img src="resources/domino.gif" />
-        <h3 style="color:white">Gradually, Then Suddenly</h3>
+        <h3 style="color:white; font-style: italic;">gradually, then suddenly..</h3>
       </a>
       </br>
       <a href="https://bitcoin.org/en/">
