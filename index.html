@@ -13,6 +13,10 @@
   </head>
   <script type="text/javascript">
     window.onload = function(){
+        let adoptions = {
+          "El Salvador": {}, 
+          "Central African Rep.": {}
+        }
         fetch('https://raw.githubusercontent.com/schui95/legaltender21/main/resources/countries.json').then((r) => r.json()).then((data) => {
         const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
         const chart = new Chart(document.getElementById("canvas").getContext("2d"), {
@@ -21,7 +25,7 @@
             labels: countries.map((d) => d.properties.name),
             datasets: [{
                 label: 'Countries',
-                data: countries.map((d) => ({feature: d, value: Math.random()})),
+                data: countries.map((d) => ({feature: d, value: (d.properties.name in adoptions)? 1:0})),
             }]
             },
             options: {
@@ -37,6 +41,7 @@
                   projection: 'equalEarth'
                 },
                 color: {
+                  interpolate: (v) => {return (v <= 0.5)? "#696969": "#f2a900"},
                   display: false
                 } 
             }}
