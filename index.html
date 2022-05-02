@@ -29,18 +29,20 @@
             showGraticule: false,
             plugins: {
                 legend: {
-                display: false
+                  display: false
                 },
             },
             scales: {
                 xy: {
-                projection: 'equalEarth'
-                }
-            }
-            }
-            });
-            });
-        };
+                  projection: 'equalEarth'
+                },
+                color: {
+                  display: false
+                } 
+            }}
+        });
+      });
+    };
   </script>
   <body style="background-color:black;">
     <canvas id="canvas"></canvas>
