@@ -12,8 +12,8 @@
   <script type="text/javascript">
     window.onload = function(){
         const adoptions = {
-          "El Salvador": {}, 
-          "Central African Rep.": {}
+          "El Salvador": {blockheight: 686380, source: "https://www.bbc.com/news/world-latin-america-57398274"}, 
+          "Central African Rep.": {blockheight: 733777, source: "https://www.bbc.com/news/world-africa-61248809"}
         }
         fetch('https://raw.githubusercontent.com/schui95/legaltender21/main/resources/countries.json').then((r) => r.json()).then((data) => {
         const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
@@ -42,7 +42,12 @@
                   interpolate: (v) => {return (v <= 0.5)? "#696969": "#f2a900"},
                   display: false
                 } 
-            }}
+            },
+            onClick: (evt, elems) => {
+                let country = elems.map((e) => e.element.feature.properties.name);
+                (country in adoptions)? window.open(adoptions[country].source): null;
+            }
+          }
         });
       });
     };
