@@ -45,7 +45,7 @@
             },
             onClick: (evt, elems) => {
                 let country = elems.map((e) => e.element.feature.properties.name);
-                (country in adoptions)? window.open(adoptions[country].source): null;
+                (country in adoptions)? window.open(adoptions[country].source): window.open("https://brrr.money/");
             }
           }
         });
