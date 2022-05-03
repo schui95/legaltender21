@@ -12,8 +12,8 @@
   <script type="text/javascript">
     window.onload = function(){
         const adoptions = {
-          "El Salvador": {blockheight: 686380, source: "https://www.bbc.com/news/world-latin-america-57398274"}, 
-          "Central African Rep.": {blockheight: 733777, source: "https://www.bbc.com/news/world-africa-61248809"}
+          "El Salvador": {rank: 1, blockheight: 686380, source: "https://www.bbc.com/news/world-latin-america-57398274"}, 
+          "Central African Rep.": {rank: 2, blockheight: 733777, source: "https://www.bbc.com/news/world-africa-61248809"}
         }
         fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/countries.json").then((r) => r.json()).then((data) => {
           const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
@@ -34,6 +34,24 @@
                 legend: {
                   display: false
                 },
+                tooltip: {
+                callbacks: {
+                    label: function(context) {
+                      let country = context.element.feature.properties.name;
+                      if (country in adoptions) {
+                        return `${country} #${adoptions[country].rank}`;
+                      }
+                      return country;
+                    },
+                    afterBody: function(context) {
+                      let country = context[0].element.feature.properties.name;
+                      if (country in adoptions) {
+                        return `Block Height: ${adoptions[country].blockheight}`;
+                      }
+                      return "";
+                    }
+                }
+            }
             },
             scales: {
                 xy: {
@@ -61,7 +79,7 @@
     <center>
       <a style="text-decoration: none;" href="https://unchained.com/blog/dollar-crisis-to-bitcoin/">
         <img src="resources/domino.gif" />
-        <h3 style="color:white; font-style: italic;">gradually, then suddenly..</h3>
+        <h4 style="color:white; font-style: italic;">gradually, then suddenly..</h4>
       </a>
       </br>
       <a href="https://bitcoin.org/en/">
