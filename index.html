@@ -44,7 +44,10 @@
                 } 
             },
             onClick: (evt, elems) => {
-                let country = elems.map((e) => e.element.feature.properties.name);
+                if (elems.length < 1) {
+                  return null;
+                }
+                let country = elems[0].element.feature.properties.name;
                 (country in adoptions)? window.open(adoptions[country].source): window.open("https://brrr.money/");
             }
           }
