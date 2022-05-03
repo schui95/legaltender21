@@ -23,6 +23,12 @@ fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/co
                     display: false
                 },
                 tooltip: {
+                    bodyFont: {
+                        size: 13
+                    },
+                    bodySpacing: 4,
+                    borderWidth: 1,
+                    borderColor: "#D3D3D3",
                     callbacks: {
                         label: function(context) {
                             let country = context.element.feature.properties.name;
