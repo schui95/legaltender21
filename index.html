@@ -8,70 +8,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/chart-3.7.1.min.js"></script>
     <script type="text/javascript" src="js/chartjs-chart-geo-3.7.1.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
   </head>
-  <script type="text/javascript">
-    window.onload = function(){
-        const adoptions = {
-          "El Salvador": {rank: 1, blockheight: 686380, source: "https://www.bbc.com/news/world-latin-america-57398274"}, 
-          "Central African Rep.": {rank: 2, blockheight: 733777, source: "https://www.bbc.com/news/world-africa-61248809"}
-        }
-        fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/countries.json").then((r) => r.json()).then((data) => {
-          const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
-          const chart = new Chart(document.getElementById("canvas").getContext("2d"), {
-            type: "choropleth",
-            data: {
-            labels: countries.map((c) => c.properties.name),
-            datasets: [{
-                label: "Countries",
-                data: countries.map((c) => ({feature: c, value: (c.properties.name in adoptions)? adoptions[c.properties.name].blockheight:-1})),
-                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? "#f2a900": "#282828")
-            }]
-            },
-            options: {
-            showOutline: false,
-            showGraticule: false,
-            plugins: {
-                legend: {
-                  display: false
-                },
-                tooltip: {
-                callbacks: {
-                    label: function(context) {
-                      let country = context.element.feature.properties.name;
-                      if (country in adoptions) {
-                        return `${country} #${adoptions[country].rank}`;
-                      }
-                      return country;
-                    },
-                    afterBody: function(context) {
-                      let country = context[0].element.feature.properties.name;
-                      if (country in adoptions) {
-                        return `Block Height: ${adoptions[country].blockheight}`;
-                      }
-                      return "";
-                    }
-                }
-            }
-            },
-            scales: {
-                xy: {
-                  projection: "equalEarth"
-                },
-                color: {
-                  display: false
-                } 
-            },
-            onClick: (evt, elems) => {
-                if (elems.length < 1) {
-                  return null;
-                }
-                let country = elems[0].element.feature.properties.name;
-                (country in adoptions)? window.open(adoptions[country].source): window.open("https://brrr.money/");
-            }
-          }
-        });
-      });
-    };
   </script>
   <body style="background-color:black;">
     <canvas id="canvas"></canvas>
