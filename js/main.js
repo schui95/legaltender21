@@ -12,7 +12,7 @@ fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/co
             datasets: [{
                 label: "Countries",
                 data: countries.map((c) => ({feature: c, value: (c.properties.name in adoptions)? adoptions[c.properties.name].blockheight:-1})),
-                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? "#f2a900": "#282828")
+                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? "#F2A900": "#282828")
             }]
         },
         options: {
