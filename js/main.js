@@ -1,3 +1,7 @@
+let colorOrange = "#F2A900";
+let colorBlue = "#739DFF";
+let colorBlack = "#282828";
+
 let adoptions = {
     "El Salvador": {rank: 1, blockheight: 686380, source: "https://www.bbc.com/news/world-latin-america-57398274"}, 
     "Central African Rep.": {rank: 2, blockheight: 733777, source: "https://www.bbc.com/news/world-africa-61248809"},
@@ -13,7 +17,7 @@ fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/co
             datasets: [{
                 label: "Countries",
                 data: countries.map((c) => ({feature: c, value: (c.properties.name in adoptions)? adoptions[c.properties.name].blockheight:-1})),
-                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? (adoptions[c.properties.name].rank)? "#F2A900": pattern.draw("diagonal", "#282828", "#739DFF", 6) : "#282828")
+                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? (adoptions[c.properties.name].rank)? colorOrange: pattern.draw("diagonal", colorBlack, colorBlue, 6) : colorBlack)
             }]
         },
         options: {
