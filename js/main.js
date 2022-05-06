@@ -64,8 +64,11 @@ fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/co
                 if (elems.length < 1) {
                     return null;
                 }
+                let ctrlPressed = evt.native.ctrlKey;
                 let country = elems[0].element.feature.properties.name;
-                (country in adoptions)? window.open(adoptions[country].source): window.open("https://brrr.money/");
+                if (country in adoptions && ctrlPressed && adoptions[country].blockheight) { window.open(`https://mempool.space/block/${adoptions[country].blockheight}`);} 
+                else if (country in adoptions) {window.open(adoptions[country].source);}
+                else { window.open("https://brrr.money/");}
             }
         }
     });
