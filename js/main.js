@@ -1,12 +1,8 @@
 let colorOrange = "#F2A900";
 let colorBlue = "#739DFF";
 let colorBlack = "#282828";
-
-let adoptions = {
-    "El Salvador": {rank: 1, blockheight: 686380, source: "https://www.bbc.com/news/world-latin-america-57398274"}, 
-    "Central African Rep.": {rank: 2, blockheight: 733777, source: "https://www.bbc.com/news/world-africa-61248809"},
-    "Panama": {source: "https://fortune.com/2022/04/29/panama-legalize-use-bitcoin-cryptocurrencies-legal-tender/"}
-}
+let adoptedCountries;
+fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/adopted_countries.json").then((r) => r.json()).then((data) => adoptedCountries = data);
 
 fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/countries.json").then((r) => r.json()).then((data) => {
     let countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
@@ -16,8 +12,8 @@ fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/co
             labels: countries.map((c) => c.properties.name),
             datasets: [{
                 label: "Countries",
-                data: countries.map((c) => ({feature: c, value: (c.properties.name in adoptions)? adoptions[c.properties.name].blockheight:-1})),
-                backgroundColor: countries.map((c) => (c.properties.name in adoptions)? (adoptions[c.properties.name].rank)? colorOrange: pattern.draw("diagonal", colorBlack, colorBlue, 6) : colorBlack)
+                data: countries.map((c) => ({feature: c, value: (c.properties.name in adoptedCountries)? adoptedCountries[c.properties.name].blockheight:-1})),
+                backgroundColor: countries.map((c) => (c.properties.name in adoptedCountries)? (adoptedCountries[c.properties.name].rank)? colorOrange: pattern.draw("diagonal", colorBlack, colorBlue, 6) : colorBlack)
             }]
         },
         options: {
@@ -37,15 +33,15 @@ fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/co
                     callbacks: {
                         label: function(context) {
                             let country = context.element.feature.properties.name;
-                            if (country in adoptions && adoptions[country].rank) {
-                                return `${country} #${adoptions[country].rank}`;
+                            if (country in adoptedCountries && adoptedCountries[country].rank) {
+                                return `${country} #${adoptedCountries[country].rank}`;
                             }
                             return country;
                         },
                         afterBody: function(context) {
                             let country = context[0].element.feature.properties.name;
-                            if (country in adoptions && adoptions[country].blockheight) {
-                                return `Block Height: ${adoptions[country].blockheight}`;
+                            if (country in adoptedCountries && adoptedCountries[country].blockheight) {
+                                return `Block Height: ${adoptedCountries[country].blockheight}`;
                             }
                             return "";
                         }
@@ -66,8 +62,8 @@ fetch("https://raw.githubusercontent.com/schui95/legaltender21/main/resources/co
                 }
                 let ctrlPressed = evt.native.ctrlKey;
                 let country = elems[0].element.feature.properties.name;
-                if (country in adoptions && ctrlPressed && adoptions[country].blockheight) { window.open(`https://mempool.space/block/${adoptions[country].blockheight}`);} 
-                else if (country in adoptions) {window.open(adoptions[country].source);}
+                if (country in adoptedCountries && ctrlPressed && adoptedCountries[country].blockheight) { window.open(`https://mempool.space/block/${adoptedCountries[country].blockheight}`);} 
+                else if (country in adoptedCountries) {window.open(adoptedCountries[country].source);}
                 else { window.open("https://brrr.money/");}
             }
         }
